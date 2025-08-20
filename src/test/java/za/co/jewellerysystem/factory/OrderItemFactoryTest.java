@@ -1,4 +1,4 @@
-/*package za.co.jewellerysystem.factory;
+package za.co.jewellerysystem.factory;
 
 import org.junit.jupiter.api.Test;
 import za.co.jewellerysystem.domain.JewelleryItem;
@@ -53,4 +53,4 @@ class OrderItemFactoryTest {
         assertNull(item);
     }
 
-}*/
+}
