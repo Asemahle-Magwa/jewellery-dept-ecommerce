@@ -1,6 +1,5 @@
 package za.co.jewellerysystem.service.Impl;
 
-import aj.org.objectweb.asm.commons.Remapper;
 import org.springframework.stereotype.Service;
 import za.co.jewellerysystem.domain.JewelleryItem;
 import za.co.jewellerysystem.repository.JewelleryItemRepository;
@@ -20,26 +19,13 @@ public class JewelleryItemServiceImpl implements JewelleryItemService {
     }
 
     @Override
-    public JewelleryItem create(JewelleryItem jewelleryItem) {
+    public JewelleryItem save(JewelleryItem jewelleryItem) {
         return repository.save(jewelleryItem);
     }
 
     @Override
-    public Optional<JewelleryItem> read(UUID id) {
+    public Optional<JewelleryItem> findById(UUID id) {
         return repository.findById(id);
-    }
-
-    @Override
-    public JewelleryItem update(JewelleryItem jewelleryItem) {
-        if (repository.existsById(jewelleryItem.getId())) {
-            return repository.save(jewelleryItem);
-        }
-        throw new IllegalArgumentException("JewelleryItem not found for update");
-    }
-
-    @Override
-    public void delete(UUID id) {
-        repository.deleteById(id);
     }
 
     @Override
@@ -48,17 +34,7 @@ public class JewelleryItemServiceImpl implements JewelleryItemService {
     }
 
     @Override
-    public Remapper findById(UUID id) {
-        return null;
-    }
-
-    @Override
-    public JewelleryItem save(JewelleryItem jewelleryItem) {
-        return null;
-    }
-
-    @Override
     public void deleteById(UUID id) {
-
+        repository.deleteById(id);
     }
 }

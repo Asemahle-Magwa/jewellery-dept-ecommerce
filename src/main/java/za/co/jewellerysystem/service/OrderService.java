@@ -7,11 +7,8 @@ import java.util.UUID;
 
 public interface OrderService {
     Order create(UUID customerId, double totalAmount);
-    Optional<Order> findById(UUID id);
-    List<Order> findAll();
-    void delete(UUID id);
-
-    Order save(Order order);
-
-    void deleteById(UUID id);
+    Order save(Order order);                          // create/update
+    Optional<Order> findById(UUID id);                // read
+    List<Order> findAll();                            // list all
+    void deleteById(UUID id);                         // delete
 }

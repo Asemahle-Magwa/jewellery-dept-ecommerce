@@ -26,6 +26,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order save(Order order) {
+        return repository.save(order);
+    }
+
+    @Override
     public Optional<Order> findById(UUID id) {
         return repository.findById(id);
     }
@@ -36,17 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(UUID id) {
-        repository.deleteById(id);
-    }
-
-    @Override
-    public Order save(Order order) {
-        return null;
-    }
-
-    @Override
     public void deleteById(UUID id) {
-
+        repository.deleteById(id);
     }
 }

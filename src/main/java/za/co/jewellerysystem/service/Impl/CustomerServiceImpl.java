@@ -21,8 +21,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer create(String passwordHash, String fullName, String email, String phone, String universityId) {
-        // ✅ Use your factory to build a valid Customer
         Customer customer = CustomerFactory.createCustomer(passwordHash, fullName, email, phone, universityId);
+        return repository.save(customer);
+    }
+
+    @Override
+    public Customer save(Customer customer) {
         return repository.save(customer);
     }
 
@@ -37,17 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void delete(UUID id) {
-        repository.deleteById(id);
-    }
-
-    @Override
-    public Customer save(Customer customer) {
-        return null;
-    }
-
-    @Override
     public void deleteById(UUID id) {
-
+        repository.deleteById(id);
     }
 }

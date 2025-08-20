@@ -1,6 +1,5 @@
 package za.co.jewellerysystem.service.Impl;
 
-import aj.org.objectweb.asm.commons.Remapper;
 import org.springframework.stereotype.Service;
 import za.co.jewellerysystem.domain.Payment;
 import za.co.jewellerysystem.repository.PaymentRepository;
@@ -20,26 +19,13 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment create(Payment payment) {
+    public Payment save(Payment payment) {
         return repository.save(payment);
     }
 
     @Override
-    public Optional<Payment> read(UUID id) {
+    public Optional<Payment> findById(UUID id) {
         return repository.findById(id);
-    }
-
-    @Override
-    public Payment update(Payment payment) {
-        if (repository.existsById(payment.getId())) {
-            return repository.save(payment);
-        }
-        throw new IllegalArgumentException("Payment not found for update");
-    }
-
-    @Override
-    public void delete(UUID id) {
-        repository.deleteById(id);
     }
 
     @Override
@@ -48,17 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment save(Payment payment) {
-        return null;
-    }
-
-    @Override
-    public Remapper findById(UUID id) {
-        return null;
-    }
-
-    @Override
     public void deleteById(UUID id) {
-
+        repository.deleteById(id);
     }
 }

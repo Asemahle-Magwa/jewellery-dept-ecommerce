@@ -3,6 +3,7 @@ package za.co.jewellerysystem.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.co.jewellerysystem.domain.Category;
+import za.co.jewellerysystem.domain.Customer;
 import za.co.jewellerysystem.service.CategoryService;
 
 import java.util.List;
