@@ -7,5 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JewellerySystemApplication{
     public static void main(String[] args) {
         SpringApplication.run(JewellerySystemApplication.class, args);
+        //@G8_DevOps
     }
 }
