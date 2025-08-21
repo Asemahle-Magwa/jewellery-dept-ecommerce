@@ -30,7 +30,7 @@ class CustomerFactoryTest {
         Exception ex = assertThrows(IllegalArgumentException.class, () ->
                 CustomerFactory.createCustomer(
                         "hashedPassword123",
-                        null,
+                        "John Doe",
                         "johndoe@email.com",
                         "0723456789",
                         "U12345"

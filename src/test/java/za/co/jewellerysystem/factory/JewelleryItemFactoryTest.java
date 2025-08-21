@@ -40,6 +40,6 @@ class JewelleryItemFactoryTest {
                         null
                 )
         );
-        assertEquals("Category is required", ex.getMessage());
+        assertEquals("Invalid input data for JewelleryItem creation.", ex.getMessage());
     }
 }

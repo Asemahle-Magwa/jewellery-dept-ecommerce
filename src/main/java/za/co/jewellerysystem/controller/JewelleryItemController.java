@@ -1,0 +1,55 @@
+package za.co.jewellerysystem.controller;
+
+import aj.org.objectweb.asm.commons.Remapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import za.co.jewellerysystem.domain.JewelleryItem;
+import za.co.jewellerysystem.service.JewelleryItemService;
+
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/jewellery-items")
+public class JewelleryItemController {
+
+    private final JewelleryItemService service;
+
+    public JewelleryItemController(JewelleryItemService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<JewelleryItem> create(@RequestBody JewelleryItem jewelleryItem) {
+        return ResponseEntity.ok(service.save(jewelleryItem));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<JewelleryItem> getById(@PathVariable UUID id) {
+        return service.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<JewelleryItem>> getAll() {
+        return ResponseEntity.ok(service.findAll());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<JewelleryItem> update(@PathVariable UUID id, @RequestBody JewelleryItem updatedItem) {
+        return service.findById(id)
+                .map(existing -> {
+                    updatedItem.setId(id);
+                    return ResponseEntity.ok(service.save(updatedItem));
+                })
+                .orElse(ResponseEntity.notFound().build());
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+}

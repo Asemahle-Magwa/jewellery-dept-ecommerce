@@ -53,4 +53,8 @@ public class OrderFactory {
 
         return order;
     }
+
+    public static Order createOrder(UUID customerId, double totalAmount) {
+        return null;
+    }
 }
