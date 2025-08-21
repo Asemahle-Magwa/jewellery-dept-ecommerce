@@ -49,4 +49,8 @@ public class Category {
     public void setJewelleryItems(List<JewelleryItem> jewelleryItems) {
         this.jewelleryItems = jewelleryItems;
     }
+
+    public void setDescription(String goldAndDiamondRings) {
+
+    }
 }

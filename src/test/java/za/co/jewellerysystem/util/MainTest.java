@@ -6,8 +6,8 @@ import za.co.jewellerysystem.factory.OrderItemFactory;
 
 import java.math.BigDecimal;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MainTest {
 

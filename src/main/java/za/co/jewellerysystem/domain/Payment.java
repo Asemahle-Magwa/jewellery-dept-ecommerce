@@ -76,4 +76,8 @@ public class Payment {
     public String getPaymentMethod() {
         return null;
     }
+
+    public void setMethod(String creditCard) {
+
+    }
 }

@@ -82,5 +82,9 @@ public class Customer {
     public void setUniversityId(String universityId) {
         this.universityId = universityId;
     }
+
+    public void setName(String johnDoe) {
+
+    }
 }
 
