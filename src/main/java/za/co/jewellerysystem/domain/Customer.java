@@ -18,9 +18,10 @@ public class Customer {
     private String phone;
     private String universityId;
 
-    // Constructors
+    // Default constructor
     public Customer() {}
 
+    // All-args constructor (optional for JPA)
     public Customer(UUID id, String passwordHash, String fullName, String email, String phone, String universityId) {
         this.id = id;
         this.passwordHash = passwordHash;
@@ -33,6 +34,36 @@ public class Customer {
     public Customer(UUID uuid, String john, String doe, String mail, String number) {
 
     }
+
+
+    // ----------- Builder -----------
+    public static class Builder {
+        private UUID id;
+        private String passwordHash;
+        private String fullName;
+        private String email;
+        private String phone;
+        private String universityId;
+
+        public Builder id(UUID id) { this.id = id; return this; }
+        public Builder passwordHash(String passwordHash) { this.passwordHash = passwordHash; return this; }
+        public Builder fullName(String fullName) { this.fullName = fullName; return this; }
+        public Builder email(String email) { this.email = email; return this; }
+        public Builder phone(String phone) { this.phone = phone; return this; }
+        public Builder universityId(String universityId) { this.universityId = universityId; return this; }
+
+        public Customer build() {
+            return new Customer(id, passwordHash, fullName, email, phone, universityId);
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    // Getters and setters...
+
+
 
     // Getters and setters
     public UUID getId() {

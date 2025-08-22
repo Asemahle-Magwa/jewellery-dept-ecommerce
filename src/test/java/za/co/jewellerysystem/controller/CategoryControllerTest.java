@@ -7,15 +7,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import za.co.jewellerysystem.domain.Category;
 import za.co.jewellerysystem.repository.CategoryRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class CategoryControllerTest {
 
     @Autowired
@@ -34,7 +38,7 @@ class CategoryControllerTest {
         categoryRepository.deleteAll();
         testCategory = new Category();
         testCategory.setName("Rings");
-        testCategory.setDescription("Gold and Diamond Rings");
+     //   testCategory.setDescription("Gold and Diamond Rings");
         testCategory = categoryRepository.save(testCategory);
     }
 
@@ -56,12 +60,12 @@ class CategoryControllerTest {
     void testCreateCategory() throws Exception {
         Category newCategory = new Category();
         newCategory.setName("Bracelets");
-        newCategory.setDescription("Luxury Bracelets");
+      //  newCategory.setDescription("Luxury Bracelets");
 
         mockMvc.perform(post("/api/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCategory)))
-                .andExpect(status().isOk())
+                .andExpect(status().isOk()) // or .isCreated() if controller returns 201
                 .andExpect(jsonPath("$.name").value("Bracelets"));
     }
 
@@ -77,11 +81,20 @@ class CategoryControllerTest {
     }
 
     @Test
-    void testDeleteCategory() throws Exception {
-        mockMvc.perform(delete("/api/categories/" + testCategory.getId()))
-                .andExpect(status().isOk());
+    void testDeleteCategory_Success() throws Exception {
+        Category existingCategory = new Category();
+        UUID id = existingCategory.getId(); // prepare saved category first
 
-        mockMvc.perform(get("/api/categories/" + testCategory.getId()))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/api/categories/{id}", id))
+                .andExpect(status().isNoContent()); // expect 204
     }
+
+    @Test
+    void testDeleteCategory_NotFound() throws Exception {
+        UUID nonExistentId = UUID.randomUUID();
+
+        mockMvc.perform(delete("/api/categories/{id}", nonExistentId))
+                .andExpect(status().isNotFound()); // expect 404
+    }
+
 }

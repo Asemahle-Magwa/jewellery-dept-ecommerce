@@ -16,12 +16,10 @@ public class Payment {
     private BigDecimal amount;
     private String status;
 
-    // Relationship with Order (one payment belongs to one order)
     @OneToOne
     @JoinColumn(name = "order_id")
     private Order order;
 
-    // Constructors
     public Payment() {}
 
     public Payment(UUID id, LocalDate paymentDate, BigDecimal amount, String status, Order order) {
@@ -31,6 +29,28 @@ public class Payment {
         this.status = status;
         this.order = order;
     }
+
+    // ----------- Builder -----------
+    public static class Builder {
+        private UUID id;
+        private LocalDate paymentDate;
+        private BigDecimal amount;
+        private String status;
+        private Order order;
+
+        public Builder id(UUID id) { this.id = id; return this; }
+        public Builder paymentDate(LocalDate paymentDate) { this.paymentDate = paymentDate; return this; }
+        public Builder amount(BigDecimal amount) { this.amount = amount; return this; }
+        public Builder status(String status) { this.status = status; return this; }
+        public Builder order(Order order) { this.order = order; return this; }
+
+        public Payment build() {
+            return new Payment(id, paymentDate, amount, status, order);
+        }
+    }
+
+    public static Builder builder() { return new Builder(); }
+
 
     // Getters and Setters
     public UUID getId() {
