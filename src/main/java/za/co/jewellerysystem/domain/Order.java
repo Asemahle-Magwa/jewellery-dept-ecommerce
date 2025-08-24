@@ -21,20 +21,16 @@ public class Order {
     private LocalDate collectionDate;
     private LocalTime collectionTime;
 
-    // Relationship with Customer (many orders can belong to one customer)
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    // Relationship with Payment (one order can have zero or one payment)
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
-    // Relationship with OrderItem (one order can contain many order items)
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
-    // Constructors
     public Order() {}
 
     public Order(UUID id, LocalDateTime orderDate, BigDecimal totalPrice, String status,
@@ -47,6 +43,31 @@ public class Order {
         this.collectionTime = collectionTime;
         this.customer = customer;
     }
+
+    // ----------- Builder -----------
+    public static class Builder {
+        private UUID id;
+        private LocalDateTime orderDate;
+        private BigDecimal totalPrice;
+        private String status;
+        private LocalDate collectionDate;
+        private LocalTime collectionTime;
+        private Customer customer;
+
+        public Builder id(UUID id) { this.id = id; return this; }
+        public Builder orderDate(LocalDateTime orderDate) { this.orderDate = orderDate; return this; }
+        public Builder totalPrice(BigDecimal totalPrice) { this.totalPrice = totalPrice; return this; }
+        public Builder status(String status) { this.status = status; return this; }
+        public Builder collectionDate(LocalDate collectionDate) { this.collectionDate = collectionDate; return this; }
+        public Builder collectionTime(LocalTime collectionTime) { this.collectionTime = collectionTime; return this; }
+        public Builder customer(Customer customer) { this.customer = customer; return this; }
+
+        public Order build() {
+            return new Order(id, orderDate, totalPrice, status, collectionDate, collectionTime, customer);
+        }
+    }
+
+    public static Builder builder() { return new Builder(); }
 
     // Getters and Setters
     public UUID getId() {

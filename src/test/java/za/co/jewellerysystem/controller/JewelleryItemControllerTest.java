@@ -23,7 +23,6 @@ class JewelleryItemControllerTest {
     void testCreateItem() throws Exception {
         JewelleryItem item = new JewelleryItem();
         item.setName("Gold Ring");
-        item.setPrice(1500.00);
 
         mockMvc.perform(post("/api/items")
                         .contentType(MediaType.APPLICATION_JSON)

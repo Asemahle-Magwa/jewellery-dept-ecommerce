@@ -17,16 +17,13 @@ public class JewelleryItem {
     private BigDecimal price;
     private int quantity;
 
-    // Relationship with Category (many jewellery items belong to one category)
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    // Relationship with OrderItem (one jewellery item can appear in many order items)
     @OneToMany(mappedBy = "jewelleryItem", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
-    // Constructors
     public JewelleryItem() {}
 
     public JewelleryItem(UUID id, String name, String description, BigDecimal price, int quantity, Category category) {
@@ -37,6 +34,30 @@ public class JewelleryItem {
         this.quantity = quantity;
         this.category = category;
     }
+
+    // ----------- Builder -----------
+    public static class Builder {
+        private UUID id;
+        private String name;
+        private String description;
+        private BigDecimal price;
+        private int quantity;
+        private Category category;
+
+        public Builder id(UUID id) { this.id = id; return this; }
+        public Builder name(String name) { this.name = name; return this; }
+        public Builder description(String description) { this.description = description; return this; }
+        public Builder price(BigDecimal price) { this.price = price; return this; }
+        public Builder quantity(int quantity) { this.quantity = quantity; return this; }
+        public Builder category(Category category) { this.category = category; return this; }
+
+        public JewelleryItem build() {
+            return new JewelleryItem(id, name, description, price, quantity, category);
+        }
+    }
+
+    public static Builder builder() { return new Builder(); }
+
 
     // Getters and Setters
     public UUID getId() {
