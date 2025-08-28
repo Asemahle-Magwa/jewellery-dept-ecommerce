@@ -27,12 +27,17 @@ class PaymentFactoryTest {
         Payment payment = PaymentFactory.createPayment(
                 order,
                 BigDecimal.valueOf(500.00),
-                "Credit Card"
+                "PAID",          // status
+                "CREDIT_CARD"    // method
         );
 
         assertNotNull(payment);
         assertEquals(BigDecimal.valueOf(500.00), payment.getAmount());
-        assertEquals("Credit Card", payment.getPaymentMethod());
+        assertEquals("PAID", payment.getStatus());
+        assertEquals("CREDIT_CARD", payment.getMethod());
+        assertNotNull(payment.getId());
+        assertNotNull(payment.getPaymentDate());
+        assertEquals(order, payment.getOrder());
     }
 
     @Test
@@ -41,9 +46,10 @@ class PaymentFactoryTest {
                 PaymentFactory.createPayment(
                         null,
                         BigDecimal.valueOf(500.00),
-                        "Credit Card"
+                        "PAID",
+                        "CREDIT_CARD"
                 )
         );
-        assertEquals("Order is required", ex.getMessage());
+        assertEquals("Order, amount, status, and method are required", ex.getMessage());
     }
 }

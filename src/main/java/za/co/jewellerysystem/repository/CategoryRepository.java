@@ -8,11 +8,6 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
-
-    Category findByName(String name);
-
-    List<Category> findByNameIgnoreCase(String name);
-
-    List<Category> findByNameContainingIgnoreCase(String keyword);
+    Category findByName(String name);   // ✅ matches field
 }
 

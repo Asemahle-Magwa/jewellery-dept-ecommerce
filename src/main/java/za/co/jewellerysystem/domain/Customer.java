@@ -61,9 +61,6 @@ public class Customer {
         return new Builder();
     }
 
-    // Getters and setters...
-
-
 
     // Getters and setters
     public UUID getId() {

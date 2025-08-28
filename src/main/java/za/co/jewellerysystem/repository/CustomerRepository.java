@@ -9,14 +9,8 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
-
-
-    Customer findByEmail(String email);
-
-    List<Customer> findByLastName(String lastName);
-
-    List<Customer> findByFirstNameIgnoreCaseOrLastNameIgnoreCase(String firstName, String lastName);
-
-    List<Customer> findByCreatedAtAfter(LocalDate date);
+    Customer findByEmail(String email);       // ✅ matches field
+    List<Customer> findByFullName(String fullName); // ✅ matches field
 }
+
 

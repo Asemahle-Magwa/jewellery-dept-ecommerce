@@ -22,15 +22,16 @@ class CustomerControllerTest {
     @Test
     void testCreateCustomer() throws Exception {
         Customer customer = new Customer();
-        customer.setName("John Doe");
+        customer.setFullName("John Doe");
         customer.setEmail("john@example.com");
 
         mockMvc.perform(post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("John Doe"));
+                .andExpect(jsonPath("$.fullName").value("John Doe"));
     }
+
 
     @Test
     void testGetAllCustomers() throws Exception {

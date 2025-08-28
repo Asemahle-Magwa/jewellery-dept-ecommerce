@@ -10,7 +10,6 @@ public class Category {
     @Id
     @GeneratedValue
     private UUID id;
-
     private String name;
 
     // Relationship with JewelleryItem (one category can have many jewellery items)
@@ -26,14 +25,16 @@ public class Category {
         this.name = name;
     }
 
-
-    // ----------- Builder -----------
     public static class Builder {
         private UUID id;
         private String name;
 
-        public Builder id(UUID id) { this.id = id; return this; }
-        public Builder name(String name) { this.name = name; return this; }
+        public Builder id(UUID id) {
+            this.id = id;
+            return this; }
+        public Builder name(String name) {
+            this.name = name;
+            return this; }
 
         public Category build() {
             return new Category(id, name);

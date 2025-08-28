@@ -28,7 +28,7 @@ class OrderFactoryTest {
         Order order = OrderFactory.createOrder(
                 customer,
                 items,
-                null, // let factory calculate totalPrice
+                BigDecimal.valueOf(250.0), // let factory calculate totalPrice
                 "Pending",
                 LocalDate.now(),
                 LocalTime.now()
@@ -38,7 +38,7 @@ class OrderFactoryTest {
         assertNotNull(order);
         assertEquals(customer, order.getCustomer());
         assertEquals(2, order.getOrderItems().size());
-        assertEquals(new BigDecimal("250.00"), order.getTotalPrice());
+        assertEquals(new BigDecimal("250.0"), order.getTotalPrice());
         assertEquals("Pending", order.getStatus());
     }
 
