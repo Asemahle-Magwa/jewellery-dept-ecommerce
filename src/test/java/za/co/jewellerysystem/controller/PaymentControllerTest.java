@@ -31,8 +31,9 @@ class PaymentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(payment)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.method").value("CREDIT_CARD"));
+                .andExpect(jsonPath("$.method").value("CREDIT_CARD"));  // use dot notation
     }
+
 
     @Test
     void testGetAllPayments() throws Exception {

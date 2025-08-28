@@ -9,9 +9,9 @@ import java.util.UUID;
 
 public class PaymentFactory {
 
-    public static Payment createPayment(Order order, BigDecimal amount, String status) {
-        if (order == null || amount == null || status == null || status.isEmpty()) {
-            throw new IllegalArgumentException("Invalid input data for Payment creation.");
+    public static Payment createPayment(Order order, BigDecimal amount, String status, String method) {
+        if (order == null || amount == null || status == null || status.isEmpty() || method == null || method.isEmpty()) {
+            throw new IllegalArgumentException("Order, amount, status, and method are required");
         }
 
         return new Payment(
@@ -19,6 +19,7 @@ public class PaymentFactory {
                 LocalDate.now(),
                 amount,
                 status,
+                method, // <-- added
                 order
         );
     }

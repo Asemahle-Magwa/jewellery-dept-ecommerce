@@ -16,25 +16,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class JewelleryItemControllerTest {
 
-    @Autowired private MockMvc mockMvc;
-    @Autowired private ObjectMapper objectMapper;
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     void testCreateItem() throws Exception {
         JewelleryItem item = new JewelleryItem();
-        item.setName("Gold Ring");
+        item.setName("Gold Ring"); // make sure this matches the field in JewelleryItem
 
-        mockMvc.perform(post("/api/items")
+        mockMvc.perform(post("/api/jewellery-items") // updated URL
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(item)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Gold Ring"));
+                .andExpect(jsonPath("$.name").value("Gold Ring")); // updated field
     }
 
     @Test
     void testGetAllItems() throws Exception {
-        mockMvc.perform(get("/api/items"))
+        mockMvc.perform(get("/api/jewellery-items")) // updated URL
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 }

@@ -33,9 +33,7 @@ class CustomerFactoryTest {
                         "John Doe",
                         "johndoe@email.com",
                         "0723456789",
-                        "U12345"
-                )
-        );
+                        "U12345" ));
         assertEquals("Full name is required", ex.getMessage());
     }
 }

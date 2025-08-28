@@ -9,15 +9,8 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface JewelleryItemRepository extends JpaRepository<JewelleryItem, UUID> {
-
-    JewelleryItem findByName(String name);
-
-    List<JewelleryItem> findByCategoryId(UUID categoryId);
-
-    List<JewelleryItem> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
-
-    List<JewelleryItem> findByStockGreaterThan(int stock);
-
-    List<JewelleryItem> findByNameContainingIgnoreCase(String keyword);
+    JewelleryItem findByName(String name);         // ✅
+    List<JewelleryItem> findByPriceLessThan(Double price); // ✅ optional useful query
 }
+
 
