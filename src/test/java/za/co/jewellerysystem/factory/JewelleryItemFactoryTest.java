@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import za.co.jewellerysystem.domain.Category;
 import za.co.jewellerysystem.domain.JewelleryItem;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,34 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class JewelleryItemFactoryTest {
 
     @Test
-    void createJewelleryItem_success() {
-        Category category = new Category(UUID.randomUUID(), "Rings");
-
-        JewelleryItem item = JewelleryItemFactory.createJewelleryItem(
-                "Diamond Ring",
-                "Elegant gold ring with diamond",
-                BigDecimal.valueOf(1500.00),
-                5,
-                category
-        );
-
+    void createWithCategory() {
+        Category category = CategoryFactory.create("Bracelets");
+        JewelleryItem item = JewelleryItemFactory.create(category);
         assertNotNull(item);
-        assertEquals("Diamond Ring", item.getName());
-        assertEquals(BigDecimal.valueOf(1500.00), item.getPrice());
+        assertNotNull(item.getId());
         assertEquals(category, item.getCategory());
+        assertNotNull(item.getName());
+        assertNotNull(item.getDescription());
+        assertTrue(item.getPrice() > 0);
     }
 
     @Test
-    void createJewelleryItem_nullCategory_shouldThrowException() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () ->
-                JewelleryItemFactory.createJewelleryItem(
-                        "Diamond Ring",
-                        "Elegant gold ring with diamond",
-                        BigDecimal.valueOf(1500.00),
-                        5,
-                        null
-                )
-        );
-        assertEquals("Invalid input data for JewelleryItem creation.", ex.getMessage());
+    void createWithParams() {
+        Category category = CategoryFactory.create("Earrings");
+        JewelleryItem item = JewelleryItemFactory.create("Gold Earrings", "Shiny gold earrings", 250.0, category);
+        assertEquals("Gold Earrings", item.getName());
+        assertEquals("Shiny gold earrings", item.getDescription());
+        assertEquals(250.0, item.getPrice());
+        assertEquals(category, item.getCategory());
     }
 }

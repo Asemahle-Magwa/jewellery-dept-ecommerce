@@ -2,52 +2,42 @@ package za.co.jewellerysystem.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import za.co.jewellerysystem.domain.Order;
 import za.co.jewellerysystem.domain.Payment;
-import za.co.jewellerysystem.service.PaymentService;
+import za.co.jewellerysystem.repository.OrderRepository;
+import za.co.jewellerysystem.repository.PaymentRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/payments")
 public class PaymentController {
 
-    private final PaymentService service;
+    private final PaymentRepository paymentRepo;
+    private final OrderRepository orderRepo;
 
-    public PaymentController(PaymentService service) {
-        this.service = service;
+    public PaymentController(PaymentRepository paymentRepo, OrderRepository orderRepo) {
+        this.paymentRepo = paymentRepo;
+        this.orderRepo = orderRepo;
     }
 
     @PostMapping
     public ResponseEntity<Payment> create(@RequestBody Payment payment) {
-        return ResponseEntity.ok(service.save(payment));
+        if (payment.getOrder() != null && payment.getOrder().getId() != null) {
+            Optional<Order> order = orderRepo.findById(payment.getOrder().getId());
+            payment.setOrder(order);
+        }
+        payment.setPaidAt(LocalDateTime.now());
+        Payment saved = paymentRepo.save(payment);
+        return ResponseEntity.ok(saved);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Payment> getById(@PathVariable UUID id) {
-        return service.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Payment>> getAll() {
-        return ResponseEntity.ok(service.findAll());
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Payment> update(@PathVariable UUID id, @RequestBody Payment updatedPayment) {
-        return service.findById(id)
-                .map(existing -> {
-                    updatedPayment.setId(id);
-                    return ResponseEntity.ok(service.save(updatedPayment));
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        service.deleteById(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/orders/{orderId}/payments")
+    public List<Payment> listByOrder(@PathVariable UUID orderId) {
+        return paymentRepo.findByOrderId(orderId);
     }
 }
+

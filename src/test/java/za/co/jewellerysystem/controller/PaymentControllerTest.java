@@ -1,44 +1,28 @@
 package za.co.jewellerysystem.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import za.co.jewellerysystem.domain.Order;
 import za.co.jewellerysystem.domain.Payment;
+import za.co.jewellerysystem.factory.OrderFactory;
+import za.co.jewellerysystem.factory.PaymentFactory;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class PaymentControllerTest {
-
-    @Autowired private MockMvc mockMvc;
-    @Autowired private ObjectMapper objectMapper;
+class PaymentFactoryTest {
 
     @Test
-    void testCreatePayment() throws Exception {
-        Payment payment = new Payment();
-        payment.setAmount(new BigDecimal("1200.00"));
-        payment.setMethod("CREDIT_CARD");
+    void createPayment() {
+        Order order = OrderFactory.create(null);
+        Payment payment = PaymentFactory.create(order, 150.0, "CREDIT_CARD");
 
-        mockMvc.perform(post("/api/payments")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(payment)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.method").value("CREDIT_CARD"));  // use dot notation
-    }
-
-
-    @Test
-    void testGetAllPayments() throws Exception {
-        mockMvc.perform(get("/api/payments"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        assertNotNull(payment);
+        assertNotNull(payment.getId());
+        assertEquals(order, payment.getOrder());
+        assertEquals(150.0, payment.getAmount());
+        assertEquals("CREDIT_CARD", payment.getMethod());
+        assertNotNull(payment.getPaidAt());
     }
 }

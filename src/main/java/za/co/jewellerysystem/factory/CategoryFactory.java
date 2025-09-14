@@ -1,19 +1,25 @@
 package za.co.jewellerysystem.factory;
 
+
 import za.co.jewellerysystem.domain.Category;
 
 import java.util.UUID;
 
 public class CategoryFactory {
 
-    public static Category createCategory(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Invalid input data for Category creation.");
-        }
+    public static Category create() {
+        return Category.builder()
+                .id(UUID.randomUUID())
+                .name("Category " + UUID.randomUUID().toString().substring(0, 5))
+                .build();
+    }
 
-        return new Category(
-                UUID.randomUUID(),
-                name
-        );
+    public static Category create(String name) {
+        return Category.builder()
+                .id(UUID.randomUUID())
+                .name(name)
+                .build();
     }
 }
+
+

@@ -10,30 +10,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerFactoryTest {
 
     @Test
-    void createCustomer_success() {
-        Customer customer = CustomerFactory.createCustomer(
-                "hashedPassword123",
-                "John Doe",
-                "johndoe@email.com",
-                "0723456789",
-                "U12345"
-        );
-
+    void createDefaultCustomer() {
+        Customer customer = CustomerFactory.create();
         assertNotNull(customer);
         assertNotNull(customer.getId());
-        assertEquals("John Doe", customer.getFullName());
-        assertEquals("johndoe@email.com", customer.getEmail());
+        assertNotNull(customer.getName());
+        assertNotNull(customer.getEmail());
+        assertNotNull(customer.getPhone());
     }
 
     @Test
-    void createCustomer_nullFullName_shouldThrowException() {
-        Exception ex = assertThrows(IllegalArgumentException.class, () ->
-                CustomerFactory.createCustomer(
-                        "hashedPassword123",
-                        "John Doe",
-                        "johndoe@email.com",
-                        "0723456789",
-                        "U12345" ));
-        assertEquals("Full name is required", ex.getMessage());
+    void createWithParams() {
+        Customer customer = CustomerFactory.create("Bob", "bob@example.com", "123456789");
+        assertEquals("Bob", customer.getName());
+        assertEquals("bob@example.com", customer.getEmail());
+        assertEquals("123456789", customer.getPhone());
     }
 }

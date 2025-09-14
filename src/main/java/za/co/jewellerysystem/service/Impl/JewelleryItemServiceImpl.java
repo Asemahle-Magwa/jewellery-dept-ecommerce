@@ -12,29 +12,29 @@ import java.util.UUID;
 @Service
 public class JewelleryItemServiceImpl implements JewelleryItemService {
 
-    private final JewelleryItemRepository repository;
+    private final JewelleryItemRepository repo;
 
-    public JewelleryItemServiceImpl(JewelleryItemRepository repository) {
-        this.repository = repository;
-    }
-
-    @Override
-    public JewelleryItem save(JewelleryItem jewelleryItem) {
-        return repository.save(jewelleryItem);
-    }
-
-    @Override
-    public Optional<JewelleryItem> findById(UUID id) {
-        return repository.findById(id);
+    public JewelleryItemServiceImpl(JewelleryItemRepository repo) {
+        this.repo = repo;
     }
 
     @Override
     public List<JewelleryItem> findAll() {
-        return repository.findAll();
+        return repo.findAll();
+    }
+
+    @Override
+    public Optional<JewelleryItem> findById(UUID id) {
+        return repo.findById(id);
+    }
+
+    @Override
+    public JewelleryItem save(JewelleryItem item) {
+        return repo.save(item);
     }
 
     @Override
     public void deleteById(UUID id) {
-        repository.deleteById(id);
+        repo.deleteById(id);
     }
 }

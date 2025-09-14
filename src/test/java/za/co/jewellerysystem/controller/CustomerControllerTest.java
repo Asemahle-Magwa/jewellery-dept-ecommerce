@@ -22,7 +22,7 @@ class CustomerControllerTest {
     @Test
     void testCreateCustomer() throws Exception {
         Customer customer = new Customer();
-        customer.setFullName("John Doe");
+        customer.setName("John Doe");
         customer.setEmail("john@example.com");
 
         mockMvc.perform(post("/api/customers")

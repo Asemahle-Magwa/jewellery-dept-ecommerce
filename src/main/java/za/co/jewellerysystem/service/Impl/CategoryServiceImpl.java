@@ -12,29 +12,29 @@ import java.util.UUID;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository repository;
+    private final CategoryRepository repo;
 
-    public CategoryServiceImpl(CategoryRepository repository) {
-        this.repository = repository;
-    }
-
-    @Override
-    public Category save(Category category) {
-        return repository.save(category);
-    }
-
-    @Override
-    public Optional<Category> findById(UUID id) {
-        return repository.findById(id);
+    public CategoryServiceImpl(CategoryRepository repo) {
+        this.repo = repo;
     }
 
     @Override
     public List<Category> findAll() {
-        return repository.findAll();
+        return repo.findAll();
+    }
+
+    @Override
+    public Optional<Category> findById(UUID id) {
+        return repo.findById(id);
+    }
+
+    @Override
+    public Category save(Category category) {
+        return repo.save(category);
     }
 
     @Override
     public void deleteById(UUID id) {
-        repository.deleteById(id);
+        repo.deleteById(id);
     }
 }

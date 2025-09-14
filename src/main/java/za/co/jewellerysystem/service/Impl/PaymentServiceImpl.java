@@ -1,5 +1,6 @@
 package za.co.jewellerysystem.service.Impl;
 
+
 import org.springframework.stereotype.Service;
 import za.co.jewellerysystem.domain.Payment;
 import za.co.jewellerysystem.repository.PaymentRepository;
@@ -12,29 +13,29 @@ import java.util.UUID;
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
-    private final PaymentRepository repository;
+    private final PaymentRepository repo;
 
-    public PaymentServiceImpl(PaymentRepository repository) {
-        this.repository = repository;
+    public PaymentServiceImpl(PaymentRepository repo) {
+        this.repo = repo;
     }
 
     @Override
     public Payment save(Payment payment) {
-        return repository.save(payment);
+        return repo.save(payment);
     }
 
     @Override
     public Optional<Payment> findById(UUID id) {
-        return repository.findById(id);
+        return repo.findById(id);
     }
 
     @Override
-    public List<Payment> findAll() {
-        return repository.findAll();
+    public List<Payment> findByOrderId(UUID orderId) {
+        return repo.findByOrderId(orderId);
     }
 
     @Override
     public void deleteById(UUID id) {
-        repository.deleteById(id);
+        repo.deleteById(id);
     }
 }
